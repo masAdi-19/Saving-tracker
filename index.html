@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Nabung 5 Juta - November 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            padding: 25px 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: clamp(1.8em, 4vw, 2.5em);
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            word-wrap: break-word;
+        }
+
+        .header p {
+            font-size: clamp(1em, 3vw, 1.2em);
+            opacity: 0.9;
+        }
+
+        .progress-section {
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .progress-circle {
+            width: clamp(120px, 40vw, 180px);
+            height: clamp(120px, 40vw, 180px);
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .progress-circle .progress-bg {
+            fill: none;
+            stroke: #e6e6e6;
+            stroke-width: 8;
+        }
+
+        .progress-circle .progress-bar {
+            fill: none;
+            stroke: #3498db;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-size: clamp(1.2em, 5vw, 1.8em);
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .progress-label {
+            font-size: clamp(0.7em, 2.5vw, 0.9em);
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 20px 0;
+            padding: 0 5px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #5dade2 0%, #3498db 100%);
+            color: white;
+            padding: 15px 12px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-value {
+            font-size: clamp(1em, 3.5vw, 1.2em);
+            font-weight: bold;
+            margin-bottom: 3px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: clamp(0.8em, 2.5vw, 0.9em);
+            opacity: 0.9;
+            line-height: 1.1;
+        }
+
+        .checklist-section {
+            padding: 0 15px 20px;
+        }
+
+        .checklist-title {
+            font-size: clamp(1.2em, 4vw, 1.5em);
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .month-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+
+        .month-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .month-item.completed {
+            background: linear-gradient(135deg, #d5dbdb 0%, #aeb6bf 100%);
+            border-left-color: #27ae60;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #3498db;
+            flex-shrink: 0;
+        }
+
+        .month-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .month-name {
+            font-weight: bold;
+            font-size: clamp(0.95em, 3vw, 1.1em);
+            color: #333;
+            line-height: 1.2;
+        }
+
+        .month-amount {
+            color: #666;
+            font-size: clamp(0.8em, 2.5vw, 0.9em);
+            margin-top: 2px;
+            line-height: 1.1;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        .quote {
+            font-size: clamp(1em, 3.5vw, 1.2em);
+            font-style: italic;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .quote-author {
+            color: #666;
+            font-size: clamp(0.8em, 2.5vw, 0.9em);
+        }
+
+        /* Tablet styles */
+        @media (min-width: 480px) {
+            .container {
+                margin: 15px auto;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .progress-section {
+                padding: 25px 20px;
+            }
+            
+            .checklist-section {
+                padding: 0 20px 25px;
+            }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .container {
+                border-radius: 20px;
+            }
+
+            .header {
+                padding: 30px;
+            }
+
+            .progress-section {
+                padding: 30px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin: 30px 0;
+            }
+
+            .stat-card {
+                padding: 20px;
+                min-height: 80px;
+            }
+
+            .checklist-section {
+                padding: 0 30px 30px;
+            }
+
+            .month-item {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+
+            .checkbox {
+                width: 20px;
+                height: 20px;
+                margin-right: 15px;
+            }
+
+            .quote-section {
+                padding: 30px;
+            }
+        }
+
+        .celebration {
+            animation: celebrate 0.5s ease-in-out;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Fix untuk lingkaran progres di mobile */
+        @media (max-width: 350px) {
+            .progress-circle {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .progress-percentage {
+                font-size: 1em;
+            }
+            
+            .progress-label {
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Target Nabung 2025</h1>
+            <p>Menuju 5 Juta di November 2025!</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-circle">
+                <svg viewBox="0 0 200 200">
+                    <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
+                    <circle class="progress-bar" cx="100" cy="100" r="90" id="progressBar"></circle>
+                </svg>
+                <div class="progress-text">
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                    <div class="progress-label">Tercapai</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="savedAmount">Rp 0</div>
+                    <div class="stat-label">Sudah Terkumpul</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="remainingAmount">Rp 5.000.000</div>
+                    <div class="stat-label">Sisa Target</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="completedMonths">0</div>
+                    <div class="stat-label">Bulan Selesai</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checklist-section">
+            <h2 class="checklist-title">📅 Progress Bulanan</h2>
+            <div id="monthsList"></div>
+        </div>
+
+        <div class="quote-section">
+            <div class="quote" id="motivationalQuote"></div>
+            <div class="quote-author" id="quoteAuthor"></div>
+        </div>
+    </div>
+
+    <script>
+        const months = [
+            'Juli 2025', 'Agustus 2025', 'September 2025', 'Oktober 2025', 'November 2025'
+        ];
+
+        const quotes = [
+            { text: "Menabung bukan soal berapa banyak yang kamu punya, tapi berapa konsisten kamu melakukannya.", author: "- Motivasi Finansial" },
+            { text: "Setiap rupiah yang kamu tabung hari ini adalah investasi untuk masa depanmu yang lebih baik.", author: "- Wisdom Keuangan" },
+            { text: "Kesuksesan finansial dimulai dari kebiasaan kecil yang dilakukan secara konsisten.", author: "- Financial Planner" },
+            { text: "Impian tanpa rencana hanya angan-angan. Mulai menabung adalah langkah nyata menuju impianmu!", author: "- Success Quote" },
+            { text: "Kamu tidak akan pernah menyesal karena menabung, tapi kamu akan menyesal jika tidak mulai dari sekarang.", author: "- Life Wisdom" },
+            { text: "Target 5 juta mungkin terlihat besar, tapi dengan Rp 1 juta per bulan, kamu pasti bisa!", author: "- Motivator" },
+            { text: "Setiap centang yang kamu buat adalah langkah lebih dekat menuju kebebasan finansial.", author: "- Financial Freedom" },
+            { text: "Yang membedakan mimpi dan kenyataan adalah ACTION. Keep saving, keep moving!", author: "- Action Taker" }
+        ];
+
+        // Gunakan variabel JavaScript biasa karena localStorage tidak didukung
+        let savedData = {};
+        let currentQuoteIndex = 0;
+
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function updateProgress() {
+            const completed = Object.values(savedData).filter(Boolean).length;
+            const percentage = Math.round((completed / months.length) * 100);
+            const savedAmount = completed * 1000000;
+            const remainingAmount = 5000000 - savedAmount;
+
+            document.getElementById('progressPercentage').textContent = percentage + '%';
+            document.getElementById('savedAmount').textContent = formatRupiah(savedAmount);
+            document.getElementById('remainingAmount').textContent = formatRupiah(Math.max(0, remainingAmount));
+            document.getElementById('completedMonths').textContent = completed;
+
+            // Update progress circle
+            const circumference = 2 * Math.PI * 90;
+            const progressBar = document.getElementById('progressBar');
+            const strokeDasharray = (percentage / 100) * circumference;
+            progressBar.style.strokeDasharray = `${strokeDasharray} ${circumference}`;
+            progressBar.style.strokeDashoffset = 0;
+
+            if (completed === months.length) {
+                document.querySelector('.container').classList.add('celebration');
+                setTimeout(() => {
+                    document.querySelector('.container').classList.remove('celebration');
+                }, 500);
+            }
+        }
+
+        function renderMonths() {
+            const monthsList = document.getElementById('monthsList');
+            monthsList.innerHTML = '';
+
+            months.forEach((month, index) => {
+                const monthItem = document.createElement('div');
+                monthItem.className = `month-item ${savedData[month] ? 'completed' : ''}`;
+                
+                monthItem.innerHTML = `
+                    <input type="checkbox" class="checkbox" id="month-${index}" ${savedData[month] ? 'checked' : ''}>
+                    <div class="month-info">
+                        <div class="month-name">${month}</div>
+                        <div class="month-amount">Target: Rp 1.000.000</div>
+                    </div>
+                `;
+
+                const checkbox = monthItem.querySelector('.checkbox');
+                checkbox.addEventListener('change', function() {
+                    savedData[month] = this.checked;
+                    
+                    if (this.checked) {
+                        monthItem.classList.add('completed');
+                        // Change quote when checking
+                        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                        updateQuote();
+                    } else {
+                        monthItem.classList.remove('completed');
+                    }
+                    
+                    updateProgress();
+                });
+
+                monthsList.appendChild(monthItem);
+            });
+        }
+
+        function updateQuote() {
+            const quote = quotes[currentQuoteIndex];
+            document.getElementById('motivationalQuote').textContent = quote.text;
+            document.getElementById('quoteAuthor').textContent = quote.author;
+        }
+
+        // Initialize
+        updateProgress();
+        renderMonths();
+        updateQuote();
+
+        // Set up progress circle initial state
+        const circumference = 2 * Math.PI * 90;
+        const progressBar = document.getElementById('progressBar');
+        progressBar.style.strokeDasharray = `0 ${circumference}`;
+        progressBar.style.strokeDashoffset = 0;
+
+        // Animate on load
+        setTimeout(updateProgress, 100);
+    </script>
+</body>
+  </html>
